@@ -127,20 +127,23 @@ const Chart = () => {
             } 
           </Toolbar>
         </AppBar>
-      <Typography 
-        variant="h6"
-        style={{ fontWeight: 'bold', marginBottom: '20px'}}
-      >
-        Tareas completadas hoy
-        </Typography>
-      <LineChart width={600} height={300} data={data}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="Tareas" stroke="#8884d8" activeDot={{ r: 8 }} />
-      </LineChart>
+        <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', marginTop: '5rem'}}>
+          <Typography 
+            variant="h6"
+            style={{ fontWeight: 'bold', marginBottom: '20px'}}
+          >
+            Tareas completadas hoy
+          </Typography>
+          <LineChart width={600} height={300} data={data}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tareas" stroke="#8884d8" activeDot={{ r: 8 }} />
+          </LineChart>
+        </div>
+      
     </div>
   );
 };

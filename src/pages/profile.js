@@ -12,6 +12,8 @@ import {
   Popover,
   List,
   ListItem,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -86,6 +88,7 @@ const Profile = () => {
   const [tasks, setTasks] = useState([]);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [filterDuration, setFilterDuration] = useState('all');
 
   useEffect(() => {
     async function getAllTasks() {
@@ -153,30 +156,56 @@ const Profile = () => {
       setAnchorEl(null);
   };
 
+  const handleDurationChange = (event) => {
+    setFilterDuration(event.target.value);
+  };
+
+  const filteredTasks = tasks.filter(task => {
+    if (filterDuration === 'all') return true;
+
+    return task?.due?.string === filterDuration.toString();
+  });
+
   const classes = useStyles();
     return (
       <div style={{ backgroundColor: '#f2f3f5', minHeight: '100vh' }}>
         <AppBar position="static" color="transparent" elevation={0}>
           <Toolbar>
-          <Popover
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        >
-            <List>
+            <Popover
+              open={Boolean(anchorEl)}
+              anchorEl={anchorEl}
+              onClose={handleMenuClose}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+            >
+              <List>
+                  <ListItem button>
+                      <Button
+                          color="primary"
+                          variant="contained"
+                          onClick={() => router.push('/chart')}
+                      >
+                          Ver mis estadísticas
+                      </Button>
+                  </ListItem>
+              </List>
+              <List>
                 <ListItem button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={() => router.push('/chart')}
-                    >
-                        Ver mis estadísticas
-                    </Button>
+                  <Select
+                    value={filterDuration}
+                    onChange={handleDurationChange}
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    style={{ color: '#26a5eb', marginRight: '20px' }}
+                  >
+                    <MenuItem value="all">Todas las Duraciones</MenuItem>
+                    <MenuItem value={30}>30 Minutos</MenuItem>
+                    <MenuItem value={45}>45 Minutos</MenuItem>
+                    <MenuItem value={60}>60 Minutos</MenuItem>
+                  </Select> 
                 </ListItem>
-            </List>
-        </Popover>
+              </List>
+            </Popover>
             <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
               <Menu />
             </IconButton>
@@ -211,11 +240,11 @@ const Profile = () => {
                   Salir
                 </Button>
               </div>
-            } 
+            }
           </Toolbar>
         </AppBar>
         <div className={classes.container}>
-          {tasks.filter(task => task.labels?.length === 0).map((task, index) => (
+          {filteredTasks.filter(task => task.labels?.length === 0).map((task, index) => (
             <Card key={task.id} className={classes.card}>
               <CardContent className={classes.content}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
