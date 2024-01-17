@@ -59,7 +59,7 @@ export default function CreateTask( {createTask} ) {
   const handleCreateTask = async () => {
     if(content !== '' && description !== '' && duration !== '') {
       try {
-        const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+        const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
         const createdTask = await api.addTask({
           content,
           description,

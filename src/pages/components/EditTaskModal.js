@@ -81,7 +81,7 @@ const ButtonModalTask = ({ task, deleteTask, updateTask, completeTask }) => {
       return;
     }
 
-    const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+    const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
     try {
       const updatedTask = await api.updateTask(task.id, {
         content: title,
@@ -95,7 +95,7 @@ const ButtonModalTask = ({ task, deleteTask, updateTask, completeTask }) => {
   };
 
   const handleDeleteTask = async () => {
-    const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+    const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
     try {
      await api.deleteTask(task.id);
      const deletedTask = task.id;
@@ -107,7 +107,7 @@ const ButtonModalTask = ({ task, deleteTask, updateTask, completeTask }) => {
   };
 
   const handleCompleteTask = async () => {
-    const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+    const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
     try {
       const completedTask = await api.updateTask(task.id, {
         labels: ['completed'],

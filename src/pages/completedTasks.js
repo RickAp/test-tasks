@@ -81,7 +81,7 @@ const CompletedTasks = () => {
 
     const { user } = useUser();
   
-  const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+  const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
   const [tasks, setTasks] = useState([]);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -117,7 +117,7 @@ const CompletedTasks = () => {
   }
 
   const handleDeleteTask = async (task) => {
-    const api = new TodoistApi('675513286f07a9ae9f9ec68af75d3dddad50ed69');
+    const api = new TodoistApi('9bb39fa113cdb19b6b09c79ad0e47afff9bf3484');
     try {
      await api.deleteTask(task.id);
      const deletedTask = task.id;
