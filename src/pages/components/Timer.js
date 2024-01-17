@@ -2,20 +2,29 @@ import { useEffect, useState } from "react";
 import { Typography, Button } from "@material-ui/core";
 
 function TaskTimer({ duration, onComplete, id }) {
-  
   const storageKey = `task${id}`;
   const parsedDuration = parseInt(duration, 10);
   const initialTime = isNaN(parsedDuration) ? 0 : parsedDuration * 60;
   
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const storedTime = localStorage.getItem(storageKey);
-    return storedTime ? parseInt(storedTime, 10) : initialTime;
-  });
-  const [isPaused, setIsPaused] = useState(!timeLeft); 
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [isPaused, setIsPaused] = useState(!initialTime);
+
+  // Función para verificar si estamos en el entorno del cliente
+  const isClient = () => typeof window === 'object';
 
   useEffect(() => {
-    if (isPaused || timeLeft === 0) {
-      return; 
+    // Solo acceder a localStorage si estamos en el cliente
+    if (isClient()) {
+      const storedTime = localStorage.getItem(storageKey);
+      if (storedTime) {
+        setTimeLeft(parseInt(storedTime, 10));
+      }
+    }
+  }, [storageKey]);
+
+  useEffect(() => {
+    if (isPaused || timeLeft === 0 || !isClient()) {
+      return;
     }
 
     const intervalId = setInterval(() => {
@@ -35,8 +44,11 @@ function TaskTimer({ duration, onComplete, id }) {
   }, [isPaused, timeLeft, storageKey]);
 
   const resetTimer = () => {
-    setTimeLeft(initialTime);
-    localStorage.setItem(storageKey, initialTime.toString());
+    const newTime = initialTime;
+    setTimeLeft(newTime);
+    if (isClient()) {
+      localStorage.setItem(storageKey, newTime.toString());
+    }
     setIsPaused(false); 
   };
 

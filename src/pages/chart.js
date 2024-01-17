@@ -132,7 +132,7 @@ const Chart = () => {
             variant="h6"
             style={{ fontWeight: 'bold', marginBottom: '20px'}}
           >
-            Tareas completadas hoy
+            Tareas completadas 
           </Typography>
           <LineChart width={600} height={300} data={data}>
             <XAxis dataKey="name" />
